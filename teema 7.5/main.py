@@ -72,7 +72,46 @@ def muuda_kontakt_gui():
             messagebox.showwarning("Tõrge", "Kontakti ei leitud muudatuseks.")
     else:
        messagebox.showwarning("Puuduvad andmed", "Palun täida kõik väljad.")
+# Kontrollib andmete korrektsust ja unikaalsust enne lisamist
+def kontrolli_ja_lisa_gui():
+    nimi = nimi_entry.get()
+    telefon = telefon_entry.get()
+    email = email_entry.get()
+    if not (nimi and telefon and email):
+        messagebox.showwarning("Viga", "Kõik väljad peavad olema täidetud.")
+        return
 
+    if not kontrolli_andmed(nimi, telefon, email):
+        messagebox.showwarning("Viga", "Andmevorming on vale.")
+        return
+
+    if not on_unikaalne(kontaktid, nimi, telefon, email):
+        messagebox.showwarning("Viga", "See kontakt on juba olemas.")
+        return
+
+    lisa_kontakt(kontaktid, nimi, telefon, email)
+    salvesta_kontaktid(kontaktid)
+    messagebox.showinfo("Edukalt", "Kontakt lisatud.")
+    kuva_kontaktid()
+
+# Näitab kontakti kõige pikema nimega
+def kuva_pikim_nimi_gui():
+    pikim = leia_pikim_nimi(kontaktid)
+    tekstikast.delete("1.0", "end")
+    if pikim:
+        tekstikast.insert("end", f"Pikim nimi: {pikim['nimi']} | {pikim['telefon']} | {pikim['email']}")
+    else:
+        tekstikast.insert("end", "Kontaktid puuduvad.")
+
+# Kuvab kontaktid emaili domeeni kaupa
+def kuva_domeenid_gui():
+    grupeeritud = grupeeritud_emaili_domeenid(kontaktid)
+    tekstikast.delete("1.0", "end")
+    for domeen, inimesed in grupeeritud.items():
+        tekstikast.insert("end", f"{domeen}:\n")
+        for k in inimesed:
+            tekstikast.insert("end", f" {k['nimi']} | {k['telefon']} | {k['email']}\n")
+            tekstikast.insert("end", "\n")
 
 aken = tk.Tk()
 aken.title("Telefoniraamat")
@@ -100,6 +139,9 @@ tk.Button(nupude_rida, text="Otsi kontakt", command=otsi_kontakt_gui,font=("Verd
 tk.Button(nupude_rida, text="Kustuta kontakt", command=kustuta_kontakt_gui, font=("Verdana", 12),fg="white", bg="lightblue").pack(side="left")
 tk.Button(nupude_rida, text="Soorteeri (nime järgi)", command=sorteeri_gui,font=("Verdana", 12),fg="white", bg="lightblue").pack(side="left")
 tk.Button(nupude_rida, text="Muuda kontakt", command=muuda_kontakt_gui,font=("Verdana", 12),fg="white", bg="lightblue").pack(side="left")
+tk.Button(nupude_rida, text="Lisa (kontrollitud)", command=kontrolli_ja_lisa_gui, font=("Verdana", 12), fg="white", bg="lightblue").pack(side="left")
+tk.Button(nupude_rida, text="Pikim nimi", command=kuva_pikim_nimi_gui, font=("Verdana", 12), fg="white", bg="lightblue").pack(side="left")
+tk.Button(nupude_rida, text="Emaili domeenid", command=kuva_domeenid_gui, font=("Verdana", 12), fg="white", bg="lightblue").pack(side="left")
 tekstikast = tk.Text(aken, height=10, width=50)
 tekstikast.pack(pady=10)
 
