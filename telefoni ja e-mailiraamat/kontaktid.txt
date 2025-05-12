@@ -1,0 +1,4 @@
+Mari Maasikas;5551234;mari@example.com
+Anna ;58762345;anna@example.com
+Milana;58769012;milana@princess.ru
+Olja;78659848;olja@koroleva.com
