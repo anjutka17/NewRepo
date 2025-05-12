@@ -31,10 +31,10 @@ korgeim = tipunimed[np.argmax(korgused_arr)]
 madalaim = tipunimed[np.argmin(korgused_arr)] 
 
 # результаты 
-print("Mägede keskmine kõrgus:", keskmine_korgus, "m") # Средняя высота гор
-print("Kõige kõrgem mägi:", korgeim, "-", maksimum_korgus, "m") # Самая высокая гора
-print("Kõige madalam mägi:", madalaim, "-", minimaalne_korgus, "m") # Самая низкая гора
-print("Kõrguste summa kokku:", summa_korgus, "m") # Общая сумма всех высот
+print("Mägede keskmine kõrgus:", keskmine_korgus, "m") 
+print("Kõige kõrgem mägi:", korgeim, "-", maksimum_korgus, "m") 
+print("Kõige madalam mägi:", madalaim, "-", minimaalne_korgus, "m")
+print("Kõrguste summa kokku:", summa_korgus, "m") 
 
 # график
 plt.figure(figsize=(10, 6))
