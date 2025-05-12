@@ -29,7 +29,7 @@ x6 = np.linspace(-0.4, 0.2, 400)
 y6 = 1.5*(x6 + 3)**2 - 10
 plt.plot(x6, y6, color="purple")
 
-plt.title("VIHMAVARI") # "Зонтик" по-эстонски
+plt.title("VIHMAVARI") 
 plt.grid(True)
 plt.axis('equal')
 plt.show()
